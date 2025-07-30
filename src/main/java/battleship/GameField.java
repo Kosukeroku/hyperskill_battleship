@@ -38,16 +38,16 @@ public class GameField {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (i == 0) { // Handle first row (numbers)
+                if (i == 0) { 
                     if (j == 0) {
-                        System.out.print("  "); // Top-left corner (two spaces)
+                        System.out.print("  "); 
                     } else {
                         System.out.print(j + " ");
                     }
-                } else if (j == 0) { // Handle first column (letters)
+                } else if (j == 0) {
                     char c = (char) ('A' + i - 1);
                     System.out.print(c + " ");
-                } else { // Play area cells
+                } else { 
                     if (fogEnabled) {
                         if (coordinates[i][j].getState() == StateOfPosition.SHIP) {
                             System.out.print(StateOfPosition.NO_SHIP.getCode() + " ");
@@ -62,24 +62,6 @@ public class GameField {
             System.out.println();
         }
     }
-
-    /*public void printFieldWithFog() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (i == 0) { // Handle first row (numbers)
-                    if (j == 0) {
-                        System.out.print("  "); // Top-left corner (two spaces)
-                    } else {
-                        System.out.print(j + " ");
-                    }
-                } else if (j == 0) { // Handle first column (letters)
-                    char c = (char) ('A' + i - 1);
-                    System.out.print(c + " ");
-                } else {
-                }
-            }
-        }
-    }*/
 
     public boolean hasAdjacent(Ship ship) {
         boolean isAdjacent = false;
