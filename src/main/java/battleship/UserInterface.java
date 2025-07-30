@@ -93,72 +93,19 @@ public class UserInterface {
                 gameField.printField(false);
                 hasBeenPlaced = true;
             } catch (InvocationTargetException e) {
-                // Unwrap the actual exception from the reflection call
                 Throwable cause = e.getCause();
                 if (cause instanceof IllegalArgumentException) {
-                    System.out.println(cause.getMessage()); // Show your custom error
+                    System.out.println(cause.getMessage()); 
                 } else {
                     System.out.println("Unexpected error: " + cause.getMessage());
                 }
             } catch (IllegalArgumentException e) {
-                // Handle other argument issues (e.g., from addShipToField)
                 System.out.println(e.getMessage());
             } catch (Exception e) {
                 System.out.println("Error creating ship: " + e.getMessage());
             }
         }
     }
-
-    /*private void takeAShot(String input) {
-        try {
-            PositionOnField inputPosition = PositionOnField.inputToPosition(input);
-            int x = inputPosition.getX();
-            int y = inputPosition.getY();
-
-            // Use actual grid position object
-            PositionOnField target = this.gameField.getCoordinates()[y][x];
-
-            if (target.getState() == StateOfPosition.SHIP) {
-                target.setState(StateOfPosition.HIT); // Update actual grid position
-
-                // Find ship containing this EXACT grid position object
-                Ship hitShip = null;
-                for (Ship ship : this.gameField.getShipsOnField()) {
-                    // Relies on .equals() working with coordinates
-                    if (ship.getParts().contains(target)) {
-                        hitShip = ship;
-                        break;
-                    }
-                }
-
-                // Check if sunk (using actual grid states)
-                boolean isSunk = true;
-                if (hitShip != null) {
-                    for (PositionOnField part : hitShip.getParts()) {
-                        // Verify: part should be same object as grid position
-                        if (part.getState() == StateOfPosition.SHIP) {
-                            isSunk = false;
-                            break;
-                        }
-                    }
-                }
-
-                // Single message logic
-                if (isSunk && hitShip != null) {
-                    System.out.println("You sank a ship!");
-                    this.gameField.getShipsOnField().remove(hitShip);
-                } else {
-                    System.out.println("You hit a ship!"); // Only if not sunk
-                }
-            } else {
-                target.setState(StateOfPosition.MISS);
-                System.out.println("You missed!");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
-
 
 
     private void takeAShot(String input, GameField gameField) throws NoSuchFieldException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -167,17 +114,15 @@ public class UserInterface {
             int x = inputPosition.getX();
             int y = inputPosition.getY();
 
-            inputPosition = gameField.getCoordinates()[y][x];  // Get actual game field position
+            inputPosition = gameField.getCoordinates()[y][x]; 
 
             if (inputPosition.getState() == StateOfPosition.SHIP) {
-                // FIRST: Update the position state
+
                 inputPosition.setState(StateOfPosition.HIT);
 
-                // SECOND: Find the specific ship that was hit
                 Ship hitShip = null;
                 for (Ship ship : gameField.getShipsOnField()) {
                     for (PositionOnField shipPart : ship.getParts()) {
-                        // Compare positions by coordinates, not by object reference
                         if (shipPart.getX() == x && shipPart.getY() == y) {
                             hitShip = ship;
                             break;
@@ -186,12 +131,10 @@ public class UserInterface {
                     if (hitShip != null) break;
                 }
 
-                // THIRD: Check if this hit sank the ship
                 boolean isSunk = false;
                 if (hitShip != null) {
                     isSunk = true;
                     for (PositionOnField part : hitShip.getParts()) {
-                        // Always check state from game field, not ship's copy
                         PositionOnField actualPart = gameField.getCoordinates()[part.getY()][part.getX()];
                         if (actualPart.getState() == StateOfPosition.SHIP) {
                             isSunk = false;
@@ -200,12 +143,11 @@ public class UserInterface {
                     }
                 }
 
-                // FOURTH: Print appropriate message (ONLY ONE)
                 if (hitShip != null && isSunk) {
                     System.out.println("You sank a ship!");
                     gameField.getShipsOnField().remove(hitShip);
                 } else {
-                    System.out.println("You hit a ship!");  // Only if not sunk
+                    System.out.println("You hit a ship!");  
                 }
 
             } else {
