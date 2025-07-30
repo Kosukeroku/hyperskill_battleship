@@ -1,6 +1,5 @@
 package battleship;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,28 +11,7 @@ public abstract class Ship {
 
     public Ship(String firstCoordinate, String secondCoordinate) throws IllegalArgumentException {
 
-        /*String regex = "^[A-J](10|[1-9])$";
 
-        if (!firstCoordinate.matches(regex) || !secondCoordinate.matches(regex)) {
-            throw new IllegalArgumentException("Error! Coordinate must contain only letters A-J and numbers 1-10");
-        }
-
-        int xToPassFirst, xToPassSecond;
-
-        if (firstCoordinate.length() > 2) {
-            xToPassFirst = Integer.parseInt(firstCoordinate.substring(1));
-        } else {
-            xToPassFirst = Character.getNumericValue(firstCoordinate.charAt(1));
-        }
-
-        if (secondCoordinate.length() > 2) {
-            xToPassSecond = Integer.parseInt(secondCoordinate.substring(1));
-        } else {
-            xToPassSecond = Character.getNumericValue(secondCoordinate.charAt(1));
-        }
-
-        PositionOnField firstPos = new PositionOnField(xToPassFirst, firstCoordinate.charAt(0) - 64);
-        PositionOnField secondPos = new PositionOnField(xToPassSecond, secondCoordinate.charAt(0) - 64);*/
 
         PositionOnField firstPos = PositionOnField.inputToPosition(firstCoordinate);
         PositionOnField secondPos = PositionOnField.inputToPosition(secondCoordinate);
